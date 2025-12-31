@@ -1,6 +1,4 @@
-import { useState, useEffect } from 'react';
-
-const STORAGE_KEY = 'trailmind-reflections';
+import { useState } from 'react';
 
 export function useLocalStorage<T>(
   key: string,

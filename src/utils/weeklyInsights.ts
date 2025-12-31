@@ -195,3 +195,4 @@ export function calculateWeeklyInsights(logs: Record<string, DailyLog>): WeeklyI
   };
 }
 
+

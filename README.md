@@ -161,17 +161,50 @@ TrailMind는 3가지 한글 프롬프트를 사용합니다:
 
 ## 배포
 
-### Vercel 배포
+### Vercel 배포 (권장)
 
-1. GitHub에 푸시
-2. Vercel에 프로젝트 연결
-3. 환경 변수 설정 (`OPENAI_API_KEY`, `OPENAI_MODEL`)
-4. 자동 배포 완료
+Vercel은 서버 없이 프론트엔드와 서버리스 함수를 무료로 호스팅합니다.
+
+#### 빠른 시작
+
+1. **GitHub에 푸시** (이미 완료됨)
+   ```bash
+   git push origin main
+   ```
+
+2. **Vercel 대시보드에서 프로젝트 가져오기**
+   - https://vercel.com 접속
+   - "Add New..." → "Project" 클릭
+   - `jsong1230/TrailMind` 선택 후 "Import"
+
+3. **환경 변수 설정**
+   - Settings → Environment Variables
+   - `OPENAI_API_KEY` 추가 (Production, Preview, Development 모두 체크)
+   - `OPENAI_MODEL` 추가 (선택사항, 기본값: `gpt-4o-mini`)
+
+4. **배포 완료**
+   - "Deploy" 클릭
+   - 약 1-2분 후 `https://trailmind-xxx.vercel.app` URL 생성
+
+#### 자동 배포
+
+이후부터는 `git push`만 하면 자동으로 배포됩니다.
+
+#### 로컬 테스트
 
 ```bash
-# Vercel CLI로 배포
-vercel
+# Vercel CLI 설치
+npm i -g vercel
+
+# 로그인 및 프로젝트 링크
+vercel login
+vercel link
+
+# 로컬 개발 서버 실행 (서버리스 함수 포함)
+vercel dev
 ```
+
+**자세한 배포 가이드**: [docs/VERCEL_DEPLOYMENT.md](./docs/VERCEL_DEPLOYMENT.md)
 
 ## 보안
 
@@ -217,8 +250,9 @@ const { addReflection, getDailyLogs, updateReflection } = useReflections();
 ## 문서
 
 - [프로젝트 제안서](./docs/PROJECT_PROPOSAL.md)
-- [AI 통합 가이드](./docs/AI_INTEGRATION.md)
+- [Vercel 배포 가이드](./docs/VERCEL_DEPLOYMENT.md) ⭐ **새로 추가**
 - [로컬 개발 가이드](./docs/LOCAL_DEVELOPMENT.md)
+- [AI 통합 가이드](./docs/AI_INTEGRATION.md)
 - [AI 프롬프트 디자인](./docs/AI_PROMPT_DESIGN.md)
 - [한글 반성 프롬프트](./docs/KOREAN_REFLECTION_PROMPTS.md)
 - [일일 반성 템플릿](./docs/DAILY_REFLECTION_TEMPLATE.md)

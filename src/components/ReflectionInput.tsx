@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { ReflectionCategory } from '../types/reflection';
-import { reflectionPrompts, getPromptsByCategory } from '../utils/prompts';
+import { getPromptsByCategory } from '../utils/prompts';
 
 interface ReflectionInputProps {
   onSave: (content: string, category?: ReflectionCategory, prompts?: string[], promptTemplateId?: string) => void;
