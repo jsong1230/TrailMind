@@ -250,7 +250,8 @@ const { addReflection, getDailyLogs, updateReflection } = useReflections();
 ## 문서
 
 - [프로젝트 제안서](./docs/PROJECT_PROPOSAL.md)
-- [Vercel 배포 가이드](./docs/VERCEL_DEPLOYMENT.md) ⭐ **새로 추가**
+- [Vercel 배포 가이드](./docs/VERCEL_DEPLOYMENT.md) ⭐
+- [배포 검증 가이드](./docs/DEPLOYMENT_VERIFICATION.md) ⭐ **새로 추가**
 - [로컬 개발 가이드](./docs/LOCAL_DEVELOPMENT.md)
 - [AI 통합 가이드](./docs/AI_INTEGRATION.md)
 - [AI 프롬프트 디자인](./docs/AI_PROMPT_DESIGN.md)

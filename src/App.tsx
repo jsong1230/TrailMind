@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { ReflectionInput } from './components/ReflectionInput';
 import { LogList } from './components/LogList';
 import { WeeklyInsights } from './components/WeeklyInsights';
+import { PatternInsights } from './components/PatternInsights';
 import { Settings } from './components/Settings';
+import { Search } from './components/Search';
 import { useReflections } from './hooks/useReflections';
 import type { Reflection } from './types/reflection';
 import './App.css';
 
-type Page = 'input' | 'logs' | 'insights' | 'settings';
+type Page = 'input' | 'logs' | 'insights' | 'patterns' | 'settings' | 'search';
 
 function App() {
   const { addReflection, updateReflection, getDailyLogs } = useReflections();
@@ -39,10 +41,22 @@ function App() {
           로그 보기 ({logs.length})
         </button>
         <button
+          className={activePage === 'search' ? 'active' : ''}
+          onClick={() => setActivePage('search')}
+        >
+          검색
+        </button>
+        <button
           className={activePage === 'insights' ? 'active' : ''}
           onClick={() => setActivePage('insights')}
         >
           주간 인사이트
+        </button>
+        <button
+          className={activePage === 'patterns' ? 'active' : ''}
+          onClick={() => setActivePage('patterns')}
+        >
+          패턴 인식
         </button>
         <button
           className={activePage === 'settings' ? 'active' : ''}
@@ -66,6 +80,22 @@ function App() {
         {activePage === 'insights' && (
           <div className="insights-section">
             <WeeklyInsights />
+          </div>
+        )}
+        {activePage === 'patterns' && (
+          <div className="patterns-section">
+            <PatternInsights />
+          </div>
+        )}
+        {activePage === 'search' && (
+          <div className="search-section">
+            <Search
+              onSelectReflection={() => {
+                // 검색 결과에서 반성 선택 시 로그 보기로 이동
+                setActivePage('logs');
+                // TODO: 특정 반성으로 스크롤하는 기능은 추후 추가 가능
+              }}
+            />
           </div>
         )}
         {activePage === 'settings' && (
