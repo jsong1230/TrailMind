@@ -9,11 +9,12 @@ import { formatAnalysisToMarkdown, parseAndFormatAnalysis } from '../utils/forma
 interface ReflectionItemProps {
   reflection: Reflection;
   onUpdate: (id: string, updates: Partial<Reflection>) => void;
+  onDelete?: (id: string) => void;
   isHighlighted?: boolean;
   onHighlightComplete?: () => void;
 }
 
-export function ReflectionItem({ reflection, onUpdate, isHighlighted, onHighlightComplete }: ReflectionItemProps) {
+export function ReflectionItem({ reflection, onUpdate, onDelete, isHighlighted, onHighlightComplete }: ReflectionItemProps) {
   const itemRef = useRef<HTMLDivElement>(null);
   const [showAIPanel, setShowAIPanel] = useState(false);
   const [aiOutput, setAiOutput] = useState(reflection.aiOutput || '');
@@ -169,6 +170,19 @@ export function ReflectionItem({ reflection, onUpdate, isHighlighted, onHighligh
           >
             {showAIPanel ? 'AI 패널 닫기' : 'AI 패널'}
           </button>
+          {onDelete && (
+            <button
+              className="delete-button"
+              onClick={() => {
+                if (window.confirm('이 반성을 삭제하시겠습니까?')) {
+                  onDelete(reflection.id);
+                }
+              }}
+              title="삭제"
+            >
+              삭제
+            </button>
+          )}
         </div>
       </div>
 

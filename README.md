@@ -9,8 +9,12 @@
 - 🤝 **관계 패턴**: 관계에서의 패턴을 발견하고 성장
 - 🤖 **AI 분석**: OpenAI를 활용한 구조화된 반성 분석
 - 📊 **주간 인사이트**: 지난 7일간의 패턴 분석
+- 📈 **통계 대시보드**: 반성 빈도, 카테고리 분포, 연속 기록, AI 활용률 시각화
+- 🔍 **검색**: 키워드/날짜/카테고리로 과거 반성 검색 및 바로가기
+- 🌓 **다크/라이트 모드**: 시스템 설정 연동 또는 수동 전환
+- 🗑️ **삭제 기능**: 개별 반성 항목 삭제
 - 💾 **Local-first**: 모든 데이터는 브라우저에 저장
-- 📤 **Export/Import**: 데이터 백업 및 복원
+- 📤 **Export/Import**: 다양한 형식(JSON, Markdown, PDF)으로 내보내기/가져오기
 
 ## 기술 스택
 
@@ -18,7 +22,7 @@
 - **백엔드**: Vercel Serverless Functions
 - **AI**: OpenAI API (GPT-4o-mini)
 - **스토리지**: 브라우저 LocalStorage
-- **스타일링**: CSS (다크 모드 지원)
+- **스타일링**: CSS (다크/라이트/시스템 모드 지원)
 
 ## 시작하기
 
@@ -81,11 +85,15 @@ TrailMind/
 │   └── generate.ts         # AI 생성 API
 ├── src/                    # 프론트엔드 소스
 │   ├── components/         # React 컴포넌트
-│   │   ├── ReflectionInput.tsx
-│   │   ├── ReflectionItem.tsx
-│   │   ├── DailyLog.tsx
-│   │   ├── WeeklyInsights.tsx
-│   │   └── Settings.tsx
+│   │   ├── ReflectionInput.tsx  # 반성 입력
+│   │   ├── ReflectionItem.tsx   # 개별 반성 표시/삭제
+│   │   ├── DailyLog.tsx         # 일별 로그
+│   │   ├── LogList.tsx          # 로그 목록
+│   │   ├── Search.tsx           # 검색
+│   │   ├── WeeklyInsights.tsx   # 주간 인사이트
+│   │   ├── PatternInsights.tsx  # 패턴 인식
+│   │   ├── Stats.tsx            # 통계 대시보드
+│   │   └── Settings.tsx         # 설정/내보내기
 │   ├── hooks/             # 커스텀 훅
 │   │   ├── useReflections.ts
 │   │   └── useLocalStorage.ts
@@ -120,15 +128,32 @@ TrailMind/
 - 날짜별 반성 기록 조회
 - Markdown 형식 표시
 - 최신순 정렬
+- 개별 반성 삭제 (확인 대화상자)
 
-### 4. 주간 인사이트
+### 4. 검색
+- 키워드 검색 (하이라이트 표시)
+- 날짜 범위 / 카테고리 필터
+- 검색 결과 클릭 시 해당 반성으로 자동 스크롤
+
+### 5. 주간 인사이트
 - 지난 7일간의 데이터 집계
 - 자주 사용된 단어 분석
 - 관계 언급 횟수
 - 휴리스틱 기반 주간 질문 생성
 
-### 5. 데이터 관리
-- Export: 모든 로그를 JSON 파일로 다운로드
+### 6. 통계 대시보드
+- 요약 카드: 기록한 날, 총 반성, 연속 기록, 평균 글자수
+- 주간 활동 차트 (최근 8주 막대 그래프)
+- 카테고리 분포 (수평 바 차트)
+- AI 활용률 (프로그레스 바)
+
+### 7. 다크/라이트 모드
+- 시스템 설정 자동 감지
+- 수동 전환 (☀️ 라이트 → 🌙 다크 → 💻 시스템)
+- 설정 localStorage에 저장
+
+### 8. 데이터 관리
+- Export: JSON, Markdown(일별/주별/월별), PDF 형식 지원
 - Import: JSON 파일에서 로그 가져오기 및 병합
 - 자동 마이그레이션 지원
 
@@ -244,7 +269,7 @@ const result = await generateAiResult({
 ```typescript
 import { useReflections } from './hooks/useReflections';
 
-const { addReflection, getDailyLogs, updateReflection } = useReflections();
+const { addReflection, getDailyLogs, updateReflection, deleteReflection } = useReflections();
 ```
 
 ## 문서

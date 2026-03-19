@@ -114,6 +114,26 @@ export function useReflections() {
     });
   };
 
+  const deleteReflection = (reflectionId: string) => {
+    setLogs((prev) => {
+      const updated: Record<string, DailyLog> = {};
+
+      for (const [date, log] of Object.entries(prev)) {
+        if (!log || !log.reflections) {
+          updated[date] = log;
+          continue;
+        }
+        const filtered = log.reflections.filter((r) => r.id !== reflectionId);
+        if (filtered.length > 0) {
+          updated[date] = { ...log, reflections: filtered };
+        }
+        // 반성이 0개면 해당 날짜 로그 자체를 제거
+      }
+
+      return updated;
+    });
+  };
+
   const importLogs = (importedLogs: Record<string, DailyLog>) => {
     setLogs((prev) => {
       const merged: Record<string, DailyLog> = { ...prev };
@@ -189,6 +209,7 @@ export function useReflections() {
     logs,
     addReflection,
     updateReflection,
+    deleteReflection,
     importLogs,
     getDailyLogs,
     getTodayLog,
