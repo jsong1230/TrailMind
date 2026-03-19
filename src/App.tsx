@@ -14,6 +14,7 @@ type Page = 'input' | 'logs' | 'insights' | 'patterns' | 'settings' | 'search';
 function App() {
   const { addReflection, updateReflection, getDailyLogs } = useReflections();
   const [activePage, setActivePage] = useState<Page>('input');
+  const [highlightReflectionId, setHighlightReflectionId] = useState<string | null>(null);
   const logs = getDailyLogs();
 
   const handleUpdateReflection = (id: string, updates: Partial<Reflection>) => {
@@ -74,7 +75,12 @@ function App() {
         )}
         {activePage === 'logs' && (
           <div className="logs-section">
-            <LogList logs={logs} onUpdateReflection={handleUpdateReflection} />
+            <LogList
+              logs={logs}
+              onUpdateReflection={handleUpdateReflection}
+              highlightReflectionId={highlightReflectionId}
+              onHighlightComplete={() => setHighlightReflectionId(null)}
+            />
           </div>
         )}
         {activePage === 'insights' && (
@@ -90,10 +96,9 @@ function App() {
         {activePage === 'search' && (
           <div className="search-section">
             <Search
-              onSelectReflection={() => {
-                // 검색 결과에서 반성 선택 시 로그 보기로 이동
+              onSelectReflection={(reflection) => {
+                setHighlightReflectionId(reflection.id);
                 setActivePage('logs');
-                // TODO: 특정 반성으로 스크롤하는 기능은 추후 추가 가능
               }}
             />
           </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { Reflection } from '../types/reflection';
 import { renderMarkdown } from '../utils/markdown';
 import { getPromptById } from '../utils/prompts';
@@ -9,14 +9,28 @@ import { formatAnalysisToMarkdown, parseAndFormatAnalysis } from '../utils/forma
 interface ReflectionItemProps {
   reflection: Reflection;
   onUpdate: (id: string, updates: Partial<Reflection>) => void;
+  isHighlighted?: boolean;
+  onHighlightComplete?: () => void;
 }
 
-export function ReflectionItem({ reflection, onUpdate }: ReflectionItemProps) {
+export function ReflectionItem({ reflection, onUpdate, isHighlighted, onHighlightComplete }: ReflectionItemProps) {
+  const itemRef = useRef<HTMLDivElement>(null);
   const [showAIPanel, setShowAIPanel] = useState(false);
   const [aiOutput, setAiOutput] = useState(reflection.aiOutput || '');
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  // 하이라이트된 항목으로 스크롤
+  useEffect(() => {
+    if (isHighlighted && itemRef.current) {
+      itemRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const timer = setTimeout(() => {
+        onHighlightComplete?.();
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [isHighlighted, onHighlightComplete]);
 
   // 기존 aiOutput이 있지만 aiAnalysisMarkdown이 없는 경우 변환
   useEffect(() => {
@@ -125,7 +139,7 @@ export function ReflectionItem({ reflection, onUpdate }: ReflectionItemProps) {
     : rawInput;
 
   return (
-    <div className="reflection-item">
+    <div ref={itemRef} className={`reflection-item${isHighlighted ? ' reflection-highlighted' : ''}`}>
       <div className="reflection-meta">
         {reflection.category && (
           <span className="category-badge">

@@ -4,9 +4,11 @@ import { DailyLog as DailyLogComponent } from './DailyLog';
 interface LogListProps {
   logs: DailyLog[];
   onUpdateReflection: (id: string, updates: Partial<Reflection>) => void;
+  highlightReflectionId?: string | null;
+  onHighlightComplete?: () => void;
 }
 
-export function LogList({ logs, onUpdateReflection }: LogListProps) {
+export function LogList({ logs, onUpdateReflection, highlightReflectionId, onHighlightComplete }: LogListProps) {
   if (logs.length === 0) {
     return (
       <div className="empty-state">
@@ -22,6 +24,8 @@ export function LogList({ logs, onUpdateReflection }: LogListProps) {
           key={log.date}
           log={log}
           onUpdateReflection={onUpdateReflection}
+          highlightReflectionId={highlightReflectionId}
+          onHighlightComplete={onHighlightComplete}
         />
       ))}
     </div>

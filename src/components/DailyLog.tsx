@@ -5,9 +5,11 @@ import { ReflectionItem } from './ReflectionItem';
 interface DailyLogProps {
   log: DailyLogType;
   onUpdateReflection: (id: string, updates: Partial<Reflection>) => void;
+  highlightReflectionId?: string | null;
+  onHighlightComplete?: () => void;
 }
 
-export function DailyLog({ log, onUpdateReflection }: DailyLogProps) {
+export function DailyLog({ log, onUpdateReflection, highlightReflectionId, onHighlightComplete }: DailyLogProps) {
   return (
     <div className="daily-log">
       <h2 className="log-date">{formatDate(log.date)}</h2>
@@ -20,6 +22,8 @@ export function DailyLog({ log, onUpdateReflection }: DailyLogProps) {
               key={reflection.id}
               reflection={reflection}
               onUpdate={onUpdateReflection}
+              isHighlighted={reflection.id === highlightReflectionId}
+              onHighlightComplete={reflection.id === highlightReflectionId ? onHighlightComplete : undefined}
             />
           ))}
         </div>

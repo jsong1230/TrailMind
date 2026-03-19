@@ -228,6 +228,19 @@ body {
   background-color: var(--bg-color);
   border-radius: 6px;
   border-left: 3px solid var(--primary-color);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.reflection-highlighted {
+  box-shadow: 0 0 0 2px var(--accent-color);
+  border-left-color: var(--accent-color);
+  animation: highlight-fade 2s ease-out;
+}
+
+@keyframes highlight-fade {
+  0% { box-shadow: 0 0 0 3px var(--accent-color); }
+  70% { box-shadow: 0 0 0 3px var(--accent-color); }
+  100% { box-shadow: 0 0 0 0 transparent; }
 }
 
 .reflection-meta {
